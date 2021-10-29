@@ -2,6 +2,8 @@
     $title = "Home";
     require_once "./utils/utils.php";
     require_once "./entity/ImagenGaleria.php";
+    require_once "./entity/Asociado.php";
+
     $galeria[] = new ImagenGaleria("1.jpg", "Descripcion imagen 1", 1, 5, 6);
     $galeria[] = new ImagenGaleria("2.jpg", "Descripcion imagen 2", 3, 4, 5);
     $galeria[] = new ImagenGaleria("3.jpg", "Descripcion imagen 3", 4, 6, 1);
@@ -15,4 +17,10 @@
     $galeria[] = new ImagenGaleria("11.jpg", "Descripcion imagen 11", 13, 4, 0);
     $galeria[] = new ImagenGaleria("12.jpg", "Descripcion imagen 12", 15, 1, 1);
 
+    $asociados[] = new Asociado("First Partner Name", "log1.jpg", "First Partner");
+    $asociados[] = new Asociado("Second Partner Name", "log2.jpg", "Second Partner");
+    $asociados[] = new Asociado("Third Partner Name", "log3.jpg", "Third Partner");
+
+    $asociados[] = getAsociados($asociados);
+    
     include("./views/index.view.php");

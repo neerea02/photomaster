@@ -25,3 +25,12 @@ function sanitizeInput(string $data): string {
     $data = htmlspecialchars($data);
     return $data;
 }
+
+function getAsociados(array $asociados){
+
+    //....
+    shuffle($asociados);
+    $aleatorios = array_slice($asociados, 0, 3);
+    return $aleatorios;
+
+}
