@@ -16,7 +16,6 @@ function  existeOpcionMenuActivaEnArray(array $options): bool{
     }
     return false;
 }
-
 function sanitizeInput(string $data): string {
     $data = trim($data);
     //Quitar las comillas escapadas \' y \ ""
@@ -25,12 +24,13 @@ function sanitizeInput(string $data): string {
     $data = htmlspecialchars($data);
     return $data;
 }
-
-function getAsociados(array $asociados){
-
-    //....
+/**
+ * Devuelve un máximo de tres elementos aleatorios del array $asociados
+ *
+ * @param array $asociados
+ * @return array
+ */
+function getAsociados(array $asociados): array{
     shuffle($asociados);
-    $aleatorios = array_slice($asociados, 0, 3);
-    return $aleatorios;
-
+    return array_slice($asociados,0, 3);
 }
