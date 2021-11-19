@@ -1,5 +1,4 @@
 <?php 
-
 class Asociado
 {
     const RUTA_IMAGENES_ASOCIADO = 'images/index/';

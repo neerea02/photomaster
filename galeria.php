@@ -13,7 +13,32 @@
     require_once "./exceptions/FileException.php";
     require_once "./utils/SimpleImage.php";
     require_once "./entity/ImagenGaleria.php";
-    
+    require_once "./database/QueryBuilder.php";
+    require_once "./database/Connection.php";
+    require_once "./core/App.php";
+    require_once "./repository/ImagenGaleriaRepository.php";
+    require_once "./utils/Forms/SelectElement.php";
+    require_once "./utils/Forms/OptionElement.php";
+    require_once "./repository/CategoriaRepository.php";
+
+    $config = require_once 'app/config.php';
+      App::bind('config', $config);
+      App::bind('connection', Connection::make($config['database']));
+
+    $repositorio = new ImagenGaleriaRepository();
+    $repositorioCategoria = new CategoriaRepository();
+    $categoriasE1 = new SelectElement(false);
+
+    $categoriasE1
+      ->setName('categoria');
+      $categorias = $repositorioCategoria->findAll();
+      foreach($categorias as $categoria){
+        $option = new OptionElement($categoriasE1, $categoria->getNombre());
+        $option->setDefaultValue($categoria->getId());
+        $categoriasE1->appendChild($option);
+      }
+    $categoriaWrapper = new MyFormControl($categoriasE1, 'Categoria', 'col-xs-12');
+
     $info = $urlImagen = "";
 
     $description = new TextareaElement();
@@ -43,7 +68,9 @@
     ->appendChild($labelFile)
     ->appendChild($file)
     ->appendChild($descriptionWrapper)
+    ->appendChild($categoriaWrapper)
     ->appendChild($b);
+
 
     if ("POST" === $_SERVER["REQUEST_METHOD"]) {
         $form->validate();
@@ -60,14 +87,25 @@
               ->toFile(ImagenGaleria::RUTA_IMAGENES_GALLERY . $file->getFileName()); 
               $info = 'Imagen enviada correctamente'; 
               $urlImagen = ImagenGaleria::RUTA_IMAGENES_GALLERY . $file->getFileName();
+              //Grabamos en la base de datos
+              $imagenGaleria = new ImagenGaleria($file->getFileName(), $description->getValue(), 0, 0, 0, $categoriasE1->getValue());
+              $repositorio->save($imagenGaleria);
+              $info = 'Imagen enviada correctamente';
+              $urlImagen = ImagenGaleria::RUTA_IMAGENES_GALLERY . $file->getFileName();
               $form->reset();
             
-          }catch(Exception $err) {
+            }catch(Exception $err) {
               $form->addError($err->getMessage());
               $imagenErr = true;
           }
-        }else{
-          
         }
     }
+
+    try {
+      $imagenes = $repositorio->findAll();
+    }catch(QueryException $qe){
+      $imagenes = [];
+      //En este caso podriamos generar un mensaje de log o parar el srcipt mediante die($qe->getMessage())
+    }
+
     include("./views/galeria.view.php");
