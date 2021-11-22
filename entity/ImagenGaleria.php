@@ -38,11 +38,11 @@ class ImagenGaleria extends Entity
      * @var int
      */
     private $categoria;
-    
 
     public function __construct(string $nombre='', string $descripcion='',
                                 int $numVisualizaciones = 0, int $numLikes = 0,
-                                int $numDownloads = 0, int $categoria = 0){
+                                int $numDownloads = 0, int $categoria = 0
+                                ){
         $this->id = null;
         $this->nombre = $nombre;
         $this->descripcion = $descripcion;
@@ -50,7 +50,6 @@ class ImagenGaleria extends Entity
         $this->numLikes = $numLikes;
         $this->numDownloads = $numDownloads;
         $this->categoria = $categoria;
-
     }
     /**
     * @return int|null
@@ -242,7 +241,7 @@ class ImagenGaleria extends Entity
             'numVisualizaciones' => $this->getNumVisualizaciones(),
             'numLikes' => $this->getNumLikes(),
             'numDownloads' => $this->getNumDownloads(),
-            'categoria' => $this->getCategoria()
+            'categoria' => $this->getCategoria(),
         ];
     }
 }

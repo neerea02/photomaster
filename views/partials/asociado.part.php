@@ -12,7 +12,8 @@
             <?php foreach($asociados as $asociado): ?>
             <ul class="list-inline">
                 <li><img src="<?=$asociado->getUrlImagen();?>" alt="<?=$asociado->getDescripcion();?>" title="<?=$asociado->getDescripcion();?>"></li>
-                <li><?=$asociado->getNombre();?></li>         </ul>
+                <li><?=$asociado->getNombre();?></li>
+            </ul>
             <?php endforeach ?>    
             </div>
         </div>

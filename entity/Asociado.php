@@ -1,7 +1,10 @@
 <?php 
-class Asociado
+require_once __DIR__ . '/Entity.php';
+
+class Asociado extends Entity
 {
     const RUTA_IMAGENES_ASOCIADO = 'images/index/';
+
     /**
      * @var string
      */
@@ -22,7 +25,7 @@ class Asociado
      * @param string $logo
      * @param string $descripcion
      */
-    public function __construct(string $nombre, string $logo, string $descripcion = ""){
+    public function __construct(string $nombre = '', string $logo = '', string $descripcion = ""){
         $this->nombre = $nombre;
         $this->logo = $logo;
         $this->descripcion = $descripcion;
@@ -48,7 +51,6 @@ class Asociado
     public function setNombre(string $nombre)
     {
         $this->nombre = $nombre;
-
         return $this;
     }
 
@@ -72,7 +74,6 @@ class Asociado
     public function setLogo(string $logo)
     {
         $this->logo = $logo;
-
         return $this;
     }
 
@@ -96,7 +97,6 @@ class Asociado
     public function setDescripcion(string $descripcion)
     {
         $this->descripcion = $descripcion;
-
         return $this;
     }
 
@@ -108,5 +108,14 @@ class Asociado
     public function getUrlImagen() : string
     {
         return self::RUTA_IMAGENES_ASOCIADO . $this->getLogo();
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'nombre' => $this->getNombre(),
+            'logo' => $this->getLogo(),
+            'descripcion' => $this->getDescripcion()
+        ];
     }
 }
